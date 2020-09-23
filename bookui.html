@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BookListApp</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cyborg/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container mt-3">
+            <h1 class="text-center">BookList App</h1>
+            <form id="book-form">
+                <div class="my-3">
+                    <label>Book Name:</label>
+                    <input class="form-control" type="text" id="title">
+                </div>
+                <div class="my-3">
+                    <label>Book ISBN:</label>
+                    <input class="form-control" type="number" id="isbn">
+                </div>
+                <div class="my-3"> 
+                    <label>Book Author:</label>
+                    <input class="form-control" type="text" id="author">
+                </div>
+                <input type="submit" value="Add book" class="btn btn-primary form-control my-3">
+            </form>
+            <table class="table table-striped mt-5">
+                <thead>
+                    <tr>
+                        <th>Book Name</th>
+                        <th>Book ISBN</th>
+                        <th>Book Author</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody id="book-list">
+                </tbody>
+            </table>
+
+        </div>
+        <script src="book.js"></script>
+    </body>
+
+</html>
