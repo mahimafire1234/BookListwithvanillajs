@@ -11,19 +11,21 @@ class Book{
 //Userinterface class
 class UI{
     static DisplayBook(){
-        const Storedbooks=[
-            {
-                title:"The Kite runner",
-                isbn:200000,
-                author:"Khaled Hosselini"
-            },
-            {
-                title:"The Book thief",
-                isbn:999999,
-                author:"Markus Zusak"
-            }
-        ];
-        const books=Storedbooks;
+        // const Storedbooks=[
+        //     {
+        //         title:"The Kite runner",
+        //         isbn:200000,
+        //         author:"Khaled Hosselini"
+        //     },
+        //     {
+        //         title:"The Book thief",
+        //         isbn:999999,
+        //         author:"Markus Zusak"
+        //     }
+        // ];
+        // const books=Storedbooks;
+        //displaying books
+        const books=Store.getBook();
         //console.log(Object.keys(books));
         //iterating over an object by converting it into an array first
         Object.keys(books).forEach(function(m){
@@ -97,6 +99,9 @@ document.querySelector("#book-form").addEventListener('submit',(e)=>{
     const arr=new Book(title1,isbn1,author1);
     //add book to ui
     UI.addBook(arr);
+    //add book to local storage
+    Store.addBook(arr);
+
     console.log(arr);
     UI.showMessage("Your book has been added","info");
     //clear data from the input field
@@ -108,9 +113,44 @@ document.querySelector("#book-list").addEventListener('click',(e)=>{
     e.preventDefault();
     //delete function
     UI.delete(e.target);
+    //delete from local storage
+    Store.removeBook(e.target.parentElement.previousElementSibling.previousElementSibling.textContent);
+    //consoles
+    console.log("here"+e.target.parentElement.previousElementSibling.previousElementSibling.textContent);
     UI.showMessage("Your book has been deleted","info");
-
     console.log(e.target);
 })
 
 //store class(can be done using django or backend framework but trying using js)
+class Store{
+    //simple crud using js localstorage
+    //retreiving books
+    static getBook(){
+        let books;
+        if(localStorage.getItem('books')===null){
+            books=[];
+        }else{
+            books=JSON.parse(localStorage.getItem('books'));
+        }
+        return books;
+
+    }
+    //adding books
+    static addBook(book){
+        const books=Store.getBook();
+        books.push(book);
+        localStorage.setItem('books',JSON.stringify(books));
+    }
+//removing books by books isbn
+    static removeBook(isbn){
+        const books=Store.getBook();
+        books.forEach((book,index)=>{
+            if(book.isbn===isbn){
+                books.splice(index,1);
+            };
+        }) 
+        localStorage.setItem('books',JSON.stringify(books));
+
+    }
+
+}
